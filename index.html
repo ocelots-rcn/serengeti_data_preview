@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<head>
+  <script src="./includes/axios.min.js" ></script>
+  <script src="./includes/fslightbox.js"></script>
+  <script src="./includes/papaparse.min.js"></script>
+  <link href="./includes/tabulator_materialize.min.css" rel="stylesheet">
+  <script type="text/javascript" src="./includes/tabulator.min.js"></script>
+  <script src="./main.js"></script>
+</head>
+
+<body >
+  <div style="width: 100%;display: flex;">
+    <label>Filter - Field: </label>
+    <select id="Field" style="min-width: 150px;margin-right: 10px" onchange="populateValues(this)">
+      <option value=""></option>
+      <option value="Species">Species</option>
+      <option value="Camera Site">Camera Site</option>
+      <option value="Month (1=Jan)">Month</option>
+    </select>
+    <select id="Type" onchange="filter()" style="margin-right: 10px">
+      <option value="=">=</option>
+      <option value=">">&#62;</option>
+      <option value=">=">&#62;=</option>
+      <option value="<">&#60;</option>
+      <option value="<=">&#60;=</option>
+    </select>
+    <select id="Value" style="min-width: 150px" onchange="filter()">
+      <option value=""></option>
+    </select>
+    <div style='flex: 1'></div>
+    <input type="Button" value="Clear Filter" onclick="clearFilter()"/>
+  </div>
+  <div id="Table"></div>
+</body>
+</html>
