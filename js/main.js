@@ -78,7 +78,7 @@ const populateValues = (selector) => {
   }
 }
 
-Papa.parse('./Serengeti_Data_200_lines_modified.csv', {
+Papa.parse('../data/Serengeti_Data_200_lines_modified.csv', {
   download: true,
   header: true,
   dynamicTyping: true,
