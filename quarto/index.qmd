@@ -1,0 +1,47 @@
+---
+format: 
+  html:
+    include-before-body: includes/magnific_header.html
+    include-after-body: includes/magnific_body.html
+    css: includes/magnific-popup.css
+    page-layout: custom
+---
+
+<style>
+body {
+  margin: 10px;
+}
+</style>
+
+```{r, message=F, echo=F, warning=F}
+library(DT)
+library(dplyr)
+library(readr)
+library(lubridate)
+library(here)
+url_suffix <- read_csv(here::here("data", "url_suffix.csv"))
+serengeti <- read_csv(here::here("data", "Serengeti_Data_200_lines_modified.csv")) %>%
+  full_join(url_suffix, serengeti, by = "CaptureEventID") %>%
+  mutate(img = paste0('<img src="https://snapshotserengeti.s3.msi.umn.edu/', suffix, '" height="52" class="image-lb" data-mfp-src="https://snapshotserengeti.s3.msi.umn.edu/', suffix, '"></img>')) %>%
+  relocate(img, .before = CaptureEventID) %>%
+  select(-X1, -suffix) %>%
+  mutate(
+    Date = mdy(Date),
+    Species = as.factor(Species),
+    `Camera Site` = as.factor(`Camera Site`),
+    Habitat = as.factor(Habitat),
+    `Month (1=Jan)` = as.integer(`Month (1=Jan)`),
+    `Number Of Animals` = as.integer(`Number Of Animals`),
+    Standing = as.integer(Standing),
+    Moving = as.integer(Moving),
+    Eating = as.integer(Eating),
+    Babies = as.integer(Babies),
+    `Longitude (m)` = as.integer(`Longitude (m)`),
+    `Latitude (m)` = as.integer(`Latitude (m)`)
+  )
+
+datatable(serengeti, 
+          filter = "top", 
+          escape = FALSE
+          )
+```
