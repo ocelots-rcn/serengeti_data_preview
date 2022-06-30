@@ -1,0 +1,22 @@
+<script>
+$(document).ready(function () {
+  table = $('#DataTables_Table_0').DataTable();
+
+  table.on('search.dt', function() {
+    // Get keys
+    keys = [];
+    Array.from(table.columns().header()).forEach((val) => keys.push(val.innerHTML));
+    keys = keys.slice(1)
+
+    // Get values
+    values = Array.from(table.columns( { filter: 'applied' }).data()).slice(1);
+
+    // Merge
+    var result = {};
+    keys.forEach((key, i) => result[key] = values[i]);
+
+    // Manually update ojs serengeti data
+    _ojs.ojsConnector.mainModule.redefine("serengeti", result);
+  });
+});
+</script>
